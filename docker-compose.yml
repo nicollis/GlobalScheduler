@@ -1,0 +1,17 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.25
+    platform: linux/amd64
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=PasswOrd!
+      - MYSQL_DATABASE=client_schedule
+      - MYSQL_USER=sq|User
+      - MYSQL_PASSWORD=PasswOrd!
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
