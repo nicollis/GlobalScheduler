@@ -42,11 +42,11 @@ public abstract class JDBC {
         }
     }
 
-    public static <T> T getFirstFromQuery(String sql, List<Object> params, Function<ResultSet, T> handler) {
+    public static <T extends ResultSetConstructible> T getFirstFromQuery(String sql, List<Object> params, Class<T> clazz) {
         return executeQuery(sql, params, rs -> {
             try {
                 if (rs.next()) {
-                    return handler.apply(rs);
+                    return ResultSetConstructible.fromResultSet(rs, clazz);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -55,12 +55,14 @@ public abstract class JDBC {
         });
     }
 
-    public static <T> List<T> getAllFromQuery(String sql, List<Object> params, Function<ResultSet, T> handler) {
+    public static <T extends ResultSetConstructible> List<T> getAllFromQuery(String sql, List<Object> params, Class<T> clazz) {
         return executeQuery(sql, params, rs -> {
             try {
                 List<T> results = new ArrayList<>();
                 while (rs.next()) {
-                     results.add(handler.apply(rs));
+                     results.add(
+                                ResultSetConstructible.fromResultSet(rs, clazz)
+                     );
                 }
                 if (results.isEmpty()) {
                     throw new NoSuchElementException("No results found.");

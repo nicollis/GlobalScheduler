@@ -20,6 +20,8 @@ public class LoginView {
     public Text label_password;
     public Button btn_login;
     public Button btn_cancel;
+    public Text label_location_id;
+    public Text label_location;
 
     public LoginView() {
         Platform.runLater(() -> {
@@ -28,12 +30,15 @@ public class LoginView {
             label_password.setText(ApplicationController.text.getString("login.password"));
             btn_login.setText(ApplicationController.text.getString("login.login"));
             btn_cancel.setText(ApplicationController.text.getString("general.cancel"));
+            label_location.setText(ApplicationController.text.getString("login.location")+":");
+            label_location_id.setText(ApplicationController.zone.toString());
         });
     }
 
     public void on_login(MouseEvent mouseEvent) {
         try {
             User user = User.login(username.getText(), password.getText());
+            System.out.println(user);
         } catch (NoSuchElementException e) {
             Popup.error(ApplicationController.text.getString("error.login_failed.title"),
                     ApplicationController.text.getString("error.login_failed.message"));

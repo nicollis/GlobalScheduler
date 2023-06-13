@@ -1,13 +1,14 @@
 package dev.ollis.wgu.globalscheduler.models;
 
 import dev.ollis.wgu.helper.JDBC;
+import dev.ollis.wgu.helper.ResultSetConstructible;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class User {
+public class User implements ResultSetConstructible {
     private int userId;
     private String userName;
 
@@ -47,6 +48,6 @@ public class User {
 
     public static User login(String userName, String userPassword) throws NoSuchElementException {
         String sql = "SELECT User_ID, User_Name FROM users WHERE User_Name = ? AND Password = ?";
-        return JDBC.getFirstFromQuery(sql, Arrays.asList(userName, userPassword), User::new);
+        return JDBC.getFirstFromQuery(sql, Arrays.asList(userName, userPassword), User.class);
     }
 }
