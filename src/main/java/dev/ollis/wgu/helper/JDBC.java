@@ -1,5 +1,8 @@
 package dev.ollis.wgu.helper;
 
+import dev.ollis.wgu.globalscheduler.models.Readable;
+import dev.ollis.wgu.globalscheduler.models.Writable;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +45,11 @@ public abstract class JDBC {
         }
     }
 
-    public static <T extends ResultSetConstructible> T getFirstFromQuery(String sql, List<Object> params, Class<T> clazz) {
+    public static <T extends Readable> T getFirstFromQuery(String sql, List<Object> params, Class<T> clazz) {
         return executeQuery(sql, params, rs -> {
             try {
                 if (rs.next()) {
-                    return ResultSetConstructible.fromResultSet(rs, clazz);
+                    return Readable.fromResultSet(rs, clazz);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -55,13 +58,13 @@ public abstract class JDBC {
         });
     }
 
-    public static <T extends ResultSetConstructible> List<T> getAllFromQuery(String sql, List<Object> params, Class<T> clazz) {
+    public static <T extends Readable> List<T> getAllFromQuery(String sql, List<Object> params, Class<T> clazz) {
         return executeQuery(sql, params, rs -> {
             try {
                 List<T> results = new ArrayList<>();
                 while (rs.next()) {
                      results.add(
-                                ResultSetConstructible.fromResultSet(rs, clazz)
+                                Readable.fromResultSet(rs, clazz)
                      );
                 }
                 if (results.isEmpty()) {
@@ -74,14 +77,17 @@ public abstract class JDBC {
         });
     }
 
-    private static <T> T executeQuery(String sql, List<Object> params, Function<ResultSet, T> handler) {
+    public static <T extends Writable> void saveObject(String sql, List<Object> params) throws SQLException  {
+        int rowChanged =  executeUpdate(sql, params);
+        if (rowChanged == 0) {
+            throw new SQLException("No rows changed.");
+        }
+    }
+
+    private static <T> T executeQuery(String sql, List<Object> params, Function<ResultSet, T> handler) throws RuntimeException {
         Connection connect = JDBC.openConnection();
         try {
-            assert connect != null;
-            PreparedStatement stmt = connect.prepareStatement(sql);
-            for (int i = 0; i < params.size(); i++) {
-                stmt.setObject(i + 1, params.get(i));
-            }
+            PreparedStatement stmt = preparedStatement(sql, params, connect);
             var rs = stmt.executeQuery();
             return handler.apply(rs);
         } catch (SQLException e) {
@@ -91,4 +97,24 @@ public abstract class JDBC {
         }
     }
 
+    private static int executeUpdate(String sql, List<Object> params) throws SQLException {
+        Connection connect = JDBC.openConnection();
+        try {
+            PreparedStatement stmt = preparedStatement(sql, params, connect);
+            return stmt.executeUpdate();
+        } finally {
+            if (connect != null) JDBC.closeConnection(connect);
+        }
+    }
+
+    private static PreparedStatement preparedStatement(String sql, List<Object> params, Connection connect) throws SQLException {
+        assert connect != null;
+        PreparedStatement stmt = connect.prepareStatement(sql);
+        if (params != null) {
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+        }
+        return stmt;
+    }
 }

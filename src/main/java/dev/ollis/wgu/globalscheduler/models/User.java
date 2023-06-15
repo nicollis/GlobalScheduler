@@ -1,14 +1,13 @@
 package dev.ollis.wgu.globalscheduler.models;
 
 import dev.ollis.wgu.helper.JDBC;
-import dev.ollis.wgu.helper.ResultSetConstructible;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
-public class User implements ResultSetConstructible {
+public class User implements Readable {
     private int userId;
     private String userName;
 

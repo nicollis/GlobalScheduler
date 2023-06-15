@@ -39,7 +39,7 @@ public class Popup {
      * @param message The message of the dialog
      * @return True if the user clicked OK, false otherwise
      */
-    public static boolean showConfirmationDialog(String title, String message) {
+    public static boolean confirm(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);

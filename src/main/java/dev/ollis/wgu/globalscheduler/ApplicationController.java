@@ -1,5 +1,6 @@
 package dev.ollis.wgu.globalscheduler;
 
+import dev.ollis.wgu.globalscheduler.controllers.LoginView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,12 +15,8 @@ public class ApplicationController extends Application {
     public static ResourceBundle text;
     public static ZoneId zone;
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationController.class.getResource("login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle(text.getString("login.title"));
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage stage) {
+        new LoginView().show();
     }
 
     public static void main(String[] args) {

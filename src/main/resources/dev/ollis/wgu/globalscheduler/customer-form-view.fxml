@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.CustomerFormView">
+   <Text fx:id="title" layoutX="33.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Customer" />
+   <Text layoutX="102.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
+   <Text layoutX="81.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+   <Text layoutX="69.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:" />
+   <Text layoutX="50.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" />
+   <Text layoutX="80.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone:" />
+   <Text layoutX="70.0" layoutY="273.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" />
+   <TextField fx:id="input_id" disable="true" editable="false" layoutX="119.0" layoutY="96.0" promptText="auto-generated" />
+   <TextField fx:id="input_name" layoutX="119.0" layoutY="129.0" />
+   <TextField fx:id="input_address" layoutX="119.0" layoutY="161.0" />
+   <TextField fx:id="input_postalCode" layoutX="120.0" layoutY="192.0" />
+   <TextField fx:id="input_phone" layoutX="120.0" layoutY="224.0" />
+   <Button layoutX="200.0" layoutY="352.0" mnemonicParsing="false" onMouseReleased="#on_save" text="Save" />
+   <Button layoutX="253.0" layoutY="352.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancel" />
+   <ComboBox fx:id="dropdown_country" layoutX="122.0" layoutY="256.0" onAction="#on_country_selected" prefHeight="25.0" prefWidth="161.0" />
+   <ComboBox fx:id="dropdown_division" disable="true" layoutX="122.0" layoutY="287.0" prefHeight="25.0" prefWidth="161.0" />
+   <Text layoutX="34.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="State/Province:" />
+</AnchorPane>
