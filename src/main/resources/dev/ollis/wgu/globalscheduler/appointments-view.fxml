@@ -2,7 +2,27 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.AppointmentsView">
-   <Button fx:id="btn_customers" layoutX="476.0" layoutY="61.0" mnemonicParsing="false" onMouseReleased="#on_customers_clicked" text="Customers" />
+<AnchorPane maxHeight="529.0" maxWidth="831.0" minHeight="529.0" minWidth="831.0" prefHeight="529.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.AppointmentsView">
+   <TableView fx:id="table_view" layoutX="16.0" layoutY="41.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="440.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="41.0">
+      <columns>
+         <TableColumn fx:id="col_id" prefWidth="29.0" text="ID" />
+         <TableColumn fx:id="col_title" prefWidth="136.0" text="Title" />
+         <TableColumn fx:id="col_description" prefWidth="104.0" text="Description" />
+         <TableColumn fx:id="col_location" prefWidth="79.0" text="Location" />
+         <TableColumn fx:id="col_type" prefWidth="90.0" text="Type" />
+         <TableColumn fx:id="col_start" prefWidth="90.0" text="Start" />
+         <TableColumn fx:id="col_end" prefWidth="90.0" text="End" />
+         <TableColumn fx:id="col_customer" prefWidth="90.0" text="Customer" />
+         <TableColumn fx:id="col_user" prefWidth="90.0" text="User" />
+         <TableColumn fx:id="col_contact" prefWidth="90.0" text="Contact" />
+      </columns>
+   </TableView>
+   <Text layoutX="22.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Appointments" wrappingWidth="134.21630859375" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="14.0" />
+   <TextField fx:id="input_search" layoutX="295.0" layoutY="10.0" onKeyReleased="#on_search_input_changed" promptText="Search by ID or Title" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0" />
+   <Button layoutX="335.0" layoutY="426.0" mnemonicParsing="false" onMouseReleased="#on_modify" prefWidth="60.0" text="Modify" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="426.0" />
+   <Button layoutX="401.0" layoutY="426.0" mnemonicParsing="false" onMouseReleased="#on_delete" prefWidth="60.0" text="Delete" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="426.0" />
+   <Button layoutX="268.0" layoutY="426.0" mnemonicParsing="false" onMouseReleased="#on_add" prefWidth="60.0" text="Add" AnchorPane.rightAnchor="143.0" AnchorPane.topAnchor="426.0" />
+   <Button fx:id="btn_close" layoutX="364.0" layoutY="486.0" mnemonicParsing="false" onMouseReleased="#on_closed" prefHeight="25.0" prefWidth="92.0" text="Close" visible="false" AnchorPane.bottomAnchor="18.0" AnchorPane.rightAnchor="15.0" />
 </AnchorPane>

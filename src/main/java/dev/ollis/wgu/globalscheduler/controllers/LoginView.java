@@ -38,7 +38,7 @@ public class LoginView implements Viewable {
         try {
             User user = User.login(username.getText(), password.getText());
             System.out.println(user);
-            new AppointmentsView().show();
+            new MainView().show();
             close();
         } catch (NoSuchElementException e) {
             Popup.error(ApplicationController.text.getString("error.login_failed.title"),

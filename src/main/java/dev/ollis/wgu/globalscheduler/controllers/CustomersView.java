@@ -56,7 +56,7 @@ public class CustomersView implements Initializable, Viewable {
             if (value.isBlank()) {
                 customers = FXCollections.observableList(Customer.getAll());
             } else if (value.matches("\\d+")) {
-                customers = FXCollections.observableList(List.of(Customer.getById(Integer.parseInt(value))));
+                customers = FXCollections.observableList(List.of(Customer.find(Integer.parseInt(value))));
             } else {
                 customers = FXCollections.observableList(Customer.getAllByName(value));
             }
@@ -91,6 +91,7 @@ public class CustomersView implements Initializable, Viewable {
             if (Popup.confirm("Delete Customer", "Are you sure you want to delete this customer?")) {
                 customer.delete();
                 refreshTable();
+                Popup.info("Customer Deleted", "The customer was deleted successfully.");
             }
         } catch (SQLException e) {
             Popup.error("Error Deleting Customer", "There was an error deleting the customer.");
@@ -111,5 +112,8 @@ public class CustomersView implements Initializable, Viewable {
     public void refreshTable() {
         ObservableList<Customer> customers = FXCollections.observableList(Customer.getAll());
         table_view.setItems(customers);
+    }
+
+    public void on_appointments(MouseEvent mouseEvent) {
     }
 }

@@ -4,8 +4,6 @@ import dev.ollis.wgu.helper.JDBC;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -41,14 +39,7 @@ public class Customer implements Readable, Writable {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "customerId=" + id +
-                ", customerName='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", phone='" + phone + '\'' +
-                ", divisionId=" + divisionId +
-                '}';
+        return getName();
     }
 
     private void setId(int customerId) {
@@ -79,27 +70,6 @@ public class Customer implements Readable, Writable {
         return id;
     }
 
-    @Override
-    public String getIdColumnName() {
-        return "Customer_ID";
-    }
-
-    @Override
-    public String getTableName() {
-        return "customers";
-    }
-
-    @Override
-    public Map<String, Supplier<Object>> getDatabaseMap() {
-        return Map.of(
-                "Customer_Name", this::getName,
-                "Address", this::getAddress,
-                "Postal_Code", this::getPostalCode,
-                "Phone", this::getPhone,
-                "Division_ID", this::getDivisionId
-        );
-    }
-
     public String getName() {
         return name;
     }
@@ -124,6 +94,41 @@ public class Customer implements Readable, Writable {
         return Division.fetch(getDivisionId());
     }
 
+    @Override
+    public String getIdColumnName() {
+        return "Customer_ID";
+    }
+
+    @Override
+    public String getTableName() {
+        return "customers";
+    }
+
+    @Override
+    public Map<String, Supplier<Object>> getDatabaseMap() {
+        return Map.of(
+                "Customer_Name", this::getName,
+                "Address", this::getAddress,
+                "Postal_Code", this::getPostalCode,
+                "Phone", this::getPhone,
+                "Division_ID", this::getDivisionId
+        );
+    }
+
+    @Override
+    public void delete() throws SQLException {
+        //Delete all appointments first
+        Appointment.getAllForCustomer(this).forEach(appointment -> {
+            try {
+                appointment.delete();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
+        Writable.super.delete();
+    }
+
     public static List<Customer> getAll() {
         String sql = "SELECT * FROM customers";
         return JDBC.getAllFromQuery(sql, null, Customer.class);
@@ -134,7 +139,7 @@ public class Customer implements Readable, Writable {
         return JDBC.getAllFromQuery(sql, List.of("%" + name + "%"), Customer.class);
     }
 
-    public static Customer getById(int id) {
+    public static Customer find(int id) {
         String sql = "SELECT * FROM customers WHERE Customer_ID = ?";
         return JDBC.getFirstFromQuery(sql, List.of(id), Customer.class);
     }

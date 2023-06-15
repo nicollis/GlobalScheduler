@@ -45,7 +45,7 @@ public abstract class JDBC {
         }
     }
 
-    public static <T extends Readable> T getFirstFromQuery(String sql, List<Object> params, Class<T> clazz) {
+    public static <T extends Readable> T getFirstFromQuery(String sql, List<Object> params, Class<T> clazz) throws NoSuchElementException {
         return executeQuery(sql, params, rs -> {
             try {
                 if (rs.next()) {
@@ -58,7 +58,7 @@ public abstract class JDBC {
         });
     }
 
-    public static <T extends Readable> List<T> getAllFromQuery(String sql, List<Object> params, Class<T> clazz) {
+    public static <T extends Readable> List<T> getAllFromQuery(String sql, List<Object> params, Class<T> clazz) throws NoSuchElementException {
         return executeQuery(sql, params, rs -> {
             try {
                 List<T> results = new ArrayList<>();

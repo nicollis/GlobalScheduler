@@ -48,4 +48,18 @@ public class Popup {
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
     }
+
+    /**
+     * Shows an info dialog
+     * @param title The title of the dialog
+     * @param message The message of the dialog
+     */
+    public static void info(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
 }
