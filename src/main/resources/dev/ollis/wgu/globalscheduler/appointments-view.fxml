@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="529.0" maxWidth="831.0" minHeight="529.0" minWidth="831.0" prefHeight="529.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.AppointmentsView">
+<AnchorPane maxHeight="529.0" maxWidth="831.0" minHeight="529.0" minWidth="831.0" prefHeight="529.0" prefWidth="831.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.AppointmentsController">
    <TableView fx:id="table_view" layoutX="16.0" layoutY="41.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="440.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="41.0">
       <columns>
          <TableColumn fx:id="col_id" prefWidth="29.0" text="ID" />

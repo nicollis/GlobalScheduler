@@ -5,7 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-public class MainView implements Viewable {
+public class MainController implements Viewable {
     public Button btn_customers;
     public AnchorPane appointment_view;
 
@@ -22,7 +22,7 @@ public class MainView implements Viewable {
     // JavaFX event handlers
 
     public void on_customers(MouseEvent mouseEvent) {
-        new CustomersView().show();
+        new CustomersController().show();
     }
 
     public void on_exit(MouseEvent mouseEvent) {

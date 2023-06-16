@@ -1,6 +1,8 @@
 package dev.ollis.wgu.globalscheduler.controllers;
 
+import dev.ollis.wgu.globalscheduler.models.Country;
 import dev.ollis.wgu.globalscheduler.models.Customer;
+import dev.ollis.wgu.globalscheduler.models.Division;
 import dev.ollis.wgu.helper.Popup;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class CustomersView implements Initializable, Viewable {
+public class CustomersController implements Initializable, Viewable {
 
     public TableView<Customer> table_view;
     public TableColumn<Customer, Integer> col_id;
@@ -27,6 +29,9 @@ public class CustomersView implements Initializable, Viewable {
     public TableColumn<Customer, String> col_phone;
     public TextField input_customer_search;
 
+    public TableColumn<Customer, Division> col_division;
+    public TableColumn<Customer, Country> col_country;
+
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -34,6 +39,8 @@ public class CustomersView implements Initializable, Viewable {
         col_address.setCellValueFactory(new PropertyValueFactory<>("address"));
         col_postalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         col_phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        col_division.setCellValueFactory(new PropertyValueFactory<>("division"));
+        col_country.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         refreshTable();
     }
@@ -48,7 +55,6 @@ public class CustomersView implements Initializable, Viewable {
     }
 
     public void on_search_input_changed(KeyEvent inputMethodEvent) {
-
         String value = input_customer_search.getText();
         ObservableList<Customer> customers;
 
@@ -74,8 +80,8 @@ public class CustomersView implements Initializable, Viewable {
             Popup.error("No Customer Selected", "Please select a customer to modify.");
             return;
         }
-        new CustomerFormView().show((formView) -> {
-            CustomerFormView view = (CustomerFormView) formView;
+        new CustomerFormController().show((formView) -> {
+            CustomerFormController view = (CustomerFormController) formView;
             view.setCustomer(customer);
             view.setParentView(this);
         });
@@ -99,8 +105,8 @@ public class CustomersView implements Initializable, Viewable {
     }
 
     public void on_add(MouseEvent mouseEvent) {
-        new CustomerFormView().show((formView) -> {
-            CustomerFormView view = (CustomerFormView) formView;
+        new CustomerFormController().show((formView) -> {
+            CustomerFormController view = (CustomerFormController) formView;
             view.setParentView(this);
         });
     }
@@ -115,5 +121,20 @@ public class CustomersView implements Initializable, Viewable {
     }
 
     public void on_appointments(MouseEvent mouseEvent) {
+        Customer customer = table_view.getSelectionModel().getSelectedItem();
+        if (customer == null) {
+            Popup.error("No Customer Selected", "Please select a customer to modify.");
+            return;
+        }
+
+        try {
+            new AppointmentsController().show((view) -> {
+                AppointmentsController appointmentsController = (AppointmentsController) view;
+                appointmentsController.setCustomer(customer);
+            });
+        } catch (NoSuchElementException e) {
+            Popup.error("No appointments", "There was no appointment found for the selected customer.");
+            // TODO: make this a prompt to create an appointment if desired
+        }
     }
 }

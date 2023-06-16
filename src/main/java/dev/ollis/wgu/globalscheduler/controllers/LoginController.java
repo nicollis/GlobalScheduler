@@ -3,7 +3,6 @@ package dev.ollis.wgu.globalscheduler.controllers;
 import dev.ollis.wgu.globalscheduler.ApplicationController;
 import dev.ollis.wgu.globalscheduler.models.User;
 import dev.ollis.wgu.helper.Popup;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -13,7 +12,7 @@ import javafx.scene.text.Text;
 
 import java.util.NoSuchElementException;
 
-public class LoginView implements Viewable {
+public class LoginController implements Viewable {
     public TextField username;
     public PasswordField password;
     public Text application_name;
@@ -37,8 +36,7 @@ public class LoginView implements Viewable {
     public void on_login(MouseEvent mouseEvent) {
         try {
             User user = User.login(username.getText(), password.getText());
-            System.out.println(user);
-            new MainView().show();
+            new MainController().show();
             close();
         } catch (NoSuchElementException e) {
             Popup.error(ApplicationController.text.getString("error.login_failed.title"),

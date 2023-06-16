@@ -4,14 +4,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.CustomersView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.CustomersController">
     <TableView fx:id="table_view" layoutX="16.0" layoutY="41.0" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="440.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="41.0">
       <columns>
           <TableColumn fx:id="col_id" prefWidth="29.0" text="ID" />
           <TableColumn fx:id="col_name" prefWidth="136.0" text="Name" />
+          <TableColumn fx:id="col_phone" prefWidth="90.0" text="Phone" />
           <TableColumn fx:id="col_address" prefWidth="104.0" text="Address" />
           <TableColumn fx:id="col_postalCode" prefWidth="79.0" text="Postal Code" />
-          <TableColumn fx:id="col_phone" prefWidth="90.0" text="Phone" />
+          <TableColumn fx:id="col_division" prefWidth="79.0" text="Division" />
+          <TableColumn fx:id="col_country" prefWidth="79.0" text="Country" />
       </columns>
     </TableView>
    <Text layoutX="22.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customers" wrappingWidth="134.21630859375" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="14.0" />

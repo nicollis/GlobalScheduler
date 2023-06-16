@@ -4,6 +4,7 @@ import dev.ollis.wgu.globalscheduler.models.Appointment;
 import dev.ollis.wgu.globalscheduler.models.Contact;
 import dev.ollis.wgu.globalscheduler.models.Customer;
 import dev.ollis.wgu.globalscheduler.models.User;
+import dev.ollis.wgu.helper.Popup;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -17,9 +18,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
-public class AppointmentsView implements Initializable, Viewable {
+public class AppointmentsController implements Initializable, Viewable {
     public Button btn_customers;
     public Button btn_close;
     public TableView<Appointment> table_view;
@@ -34,6 +37,8 @@ public class AppointmentsView implements Initializable, Viewable {
     public TableColumn<Appointment, Customer> col_customer;
     public TableColumn<Appointment, Contact> col_contact;
     public TextField input_search;
+
+    public Customer customer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,17 +63,49 @@ public class AppointmentsView implements Initializable, Viewable {
 
     @Override
     public Node windowElement() {
-        return btn_customers;
+        return table_view;
     }
 
     public void refreshTable() {
-        ObservableList<Appointment> appointments = FXCollections.observableList(Appointment.getAll());
-        table_view.setItems(appointments);
+        List<Appointment> appointments = null;
+        if (customer == null) {
+            appointments = Appointment.getAll();
+        } else {
+            appointments = Appointment.getAllForCustomer(customer);
+        }
+        table_view.setItems(FXCollections.observableList(appointments));
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        this.btn_close.setVisible(true);
+        this.input_search.setVisible(false);
+        refreshTable();
     }
 
     // JavaFX Event Handlers
 
     public void on_search_input_changed(KeyEvent keyEvent) {
+        String value = input_search.getText();
+        ObservableList<Appointment> appointments;
+
+        try {
+            if (value.isBlank()) {
+                refreshTable();
+                return;
+            } else if (value.matches("\\d+")) {
+                appointments = FXCollections.observableList(
+                        List.of(Appointment.find(Integer.parseInt(value))));
+            } else {
+                appointments = FXCollections.observableList(Appointment.getAllForTitle(value, customer));
+            }
+        } catch (NoSuchElementException e) {
+            Popup.error("No Results", "No Customers found for the given search term.");
+            input_search.setText("");
+            refreshTable();
+            return;
+        }
+        table_view.setItems(appointments);
     }
 
     public void on_modify(MouseEvent mouseEvent) {
@@ -78,6 +115,7 @@ public class AppointmentsView implements Initializable, Viewable {
     }
 
     public void on_add(MouseEvent mouseEvent) {
+        new AppointmentFormController().show();
     }
 
     public void on_closed(MouseEvent mouseEvent) {

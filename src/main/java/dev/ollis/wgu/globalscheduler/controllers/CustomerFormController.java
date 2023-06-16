@@ -18,7 +18,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CustomerFormView implements Initializable, Viewable {
+public class CustomerFormController implements Initializable, Viewable {
     public TextField input_id;
     public TextField input_name;
     public TextField input_address;
@@ -29,9 +29,9 @@ public class CustomerFormView implements Initializable, Viewable {
 
     public Customer customer;
     public Text title;
-    private CustomersView parentView;
+    private CustomersController parentView;
 
-    public void setParentView(CustomersView parentView) {
+    public void setParentView(CustomersController parentView) {
         this.parentView = parentView;
     }
 
@@ -75,6 +75,15 @@ public class CustomerFormView implements Initializable, Viewable {
         String postalCode = input_postalCode.getText();
         String phone = input_phone.getText();
         Division division = dropdown_division.getValue();
+
+        if (name == null || name.isEmpty() ||
+                address == null || address.isEmpty() ||
+                postalCode == null || postalCode.isEmpty() ||
+                phone == null || phone.isEmpty() ||
+                division == null) {
+            Popup.error("Error saving customer", "All fields are required!");
+            return;
+        }
 
         if (customer == null) {
             customer = new Customer(name, address, postalCode, phone, division.getId());

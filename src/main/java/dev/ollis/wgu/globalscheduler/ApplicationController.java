@@ -1,12 +1,9 @@
 package dev.ollis.wgu.globalscheduler;
 
-import dev.ollis.wgu.globalscheduler.controllers.LoginView;
+import dev.ollis.wgu.globalscheduler.controllers.LoginController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -16,7 +13,7 @@ public class ApplicationController extends Application {
     public static ZoneId zone;
     @Override
     public void start(Stage stage) {
-        new LoginView().show();
+        new LoginController().show();
     }
 
     public static void main(String[] args) {

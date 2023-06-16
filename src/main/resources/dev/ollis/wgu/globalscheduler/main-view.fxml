@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="472.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.MainView">
+<AnchorPane prefHeight="472.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.MainController">
     <fx:include fx:id="appointment_view" source="appointments-view.fxml" />
     <Button fx:id="btn_customers" layoutX="870.0" layoutY="45.0" mnemonicParsing="false" onMouseReleased="#on_customers" text="Customers" />
    <Button layoutX="893.0" layoutY="490.0" mnemonicParsing="false" onMouseReleased="#on_exit" prefHeight="25.0" prefWidth="55.0" text="Exit" />

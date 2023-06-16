@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.CustomerFormView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="398.0" prefWidth="326.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.CustomerFormController">
    <Text fx:id="title" layoutX="33.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Customer" />
    <Text layoutX="102.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
    <Text layoutX="81.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />

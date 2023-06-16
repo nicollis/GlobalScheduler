@@ -155,6 +155,11 @@ public class Appointment implements Readable, Writable {
         );
     }
 
+    public static Appointment find(int id) {
+        String sql = "SELECT * FROM appointments WHERE Appointment_ID = ?";
+        return JDBC.getFirstFromQuery(sql, List.of(id), Appointment.class);
+    }
+
     public static List<Appointment> getAll() {
         String sql = "SELECT * FROM appointments";
         return JDBC.getAllFromQuery(sql, null, Appointment.class);
@@ -163,5 +168,46 @@ public class Appointment implements Readable, Writable {
     public static List<Appointment> getAllForCustomer(Customer customer) {
         String sql = "SELECT * FROM appointments WHERE Customer_ID = ?";
         return JDBC.getAllFromQuery(sql, List.of(customer.getId()), Appointment.class);
+    }
+
+    public static List<Appointment> getAllForTitle(String title, Customer forCustomer) {
+        String sql = "SELECT * FROM appointments WHERE Title LIKE ?";
+        List<Object> params = List.of("%" + title + "%");
+        if (forCustomer != null) {
+            sql += " AND Customer_ID = ?";
+            params.add(forCustomer.getId());
+        }
+        return JDBC.getAllFromQuery(sql, params, Appointment.class);
+    }
+
+    public static List<Type> getAllTypes() {
+        String sql = "SELECT DISTINCT Type FROM appointments";
+        List<Type> results = JDBC.getAllFromQuery(sql, null, Type.class);
+        return results;
+    }
+
+    public static class Type implements Readable {
+        private String type;
+
+        public Type(ResultSet rs) {
+            try {
+                setType(rs.getString("Type"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public String toString() {
+            return getType();
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
     }
 }

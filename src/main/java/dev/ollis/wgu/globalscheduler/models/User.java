@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class User implements Readable {
+    private static User currentUser;
+    public static User getCurrentUser() {
+        return currentUser;
+    }
     private int userId;
     private String userName;
 
@@ -49,11 +53,18 @@ public class User implements Readable {
 
     public static User login(String userName, String userPassword) throws NoSuchElementException {
         String sql = "SELECT User_ID, User_Name FROM users WHERE User_Name = ? AND Password = ?";
-        return JDBC.getFirstFromQuery(sql, Arrays.asList(userName, userPassword), User.class);
+        User user = JDBC.getFirstFromQuery(sql, Arrays.asList(userName, userPassword), User.class);
+        currentUser = user;
+        return user;
     }
 
     public static User find(int id) throws NoSuchElementException {
         String sql = "SELECT User_ID, User_Name FROM users WHERE User_ID = ?";
         return JDBC.getFirstFromQuery(sql, List.of(id), User.class);
+    }
+
+    public static List<User> getAll() throws NoSuchElementException {
+        String sql = "SELECT User_ID, User_Name FROM users";
+        return JDBC.getAllFromQuery(sql, null, User.class);
     }
 }

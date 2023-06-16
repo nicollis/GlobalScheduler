@@ -23,9 +23,7 @@ public abstract class JDBC {
         // Open Connection
         try {
             Class.forName(DB_DRIVER);
-            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-            System.out.println("Connection to database " + DB_NAME + " established.");
-            return conn;
+            return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
         } catch (ClassNotFoundException e) {
             System.out.println("Class not found: " + e.getMessage());
             return null;
@@ -39,7 +37,6 @@ public abstract class JDBC {
         // Close Connection
         try {
             conn.close();
-            System.out.println("Connection to database " + DB_NAME + " closed.");
         } catch (SQLException e) {
             System.out.println("SQL Exception: " + e.getMessage());
         }

@@ -94,6 +94,8 @@ public class Customer implements Readable, Writable {
         return Division.fetch(getDivisionId());
     }
 
+    public Country getCountry() { return getDivision().getCountry(); }
+
     @Override
     public String getIdColumnName() {
         return "Customer_ID";
