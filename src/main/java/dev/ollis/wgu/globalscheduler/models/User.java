@@ -17,13 +17,13 @@ public class User implements Readable {
     private String userName;
 
     public User(int userId, String userName) {
-        setUserId(userId);
+        setId(userId);
         setUserName(userName);
     }
 
     public User(ResultSet rs) throws RuntimeException {
         try {
-            setUserId(rs.getInt("User_ID"));
+            setId(rs.getInt("User_ID"));
             setUserName(rs.getString("User_Name"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -35,11 +35,11 @@ public class User implements Readable {
         return getUserName();
     }
 
-    public int getUserId() {
+    public int getId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    private void setId(int userId) {
         this.userId = userId;
     }
 

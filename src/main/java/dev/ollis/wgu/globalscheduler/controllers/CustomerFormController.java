@@ -29,9 +29,9 @@ public class CustomerFormController implements Initializable, Viewable {
 
     public Customer customer;
     public Text title;
-    private CustomersController parentView;
+    private Refreshable parentView;
 
-    public void setParentView(CustomersController parentView) {
+    public void setParentView(Refreshable parentView) {
         this.parentView = parentView;
     }
 
@@ -97,7 +97,7 @@ public class CustomerFormController implements Initializable, Viewable {
 
         try {
             customer.save();
-            parentView.refreshTable();
+            parentView.refresh();
             close();
         } catch (SQLException e) {
             Popup.error("Error saving customer", e.getMessage());

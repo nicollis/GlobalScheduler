@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class CustomersController implements Initializable, Viewable {
+public class CustomersController implements Initializable, Viewable, Refreshable {
 
     public TableView<Customer> table_view;
     public TableColumn<Customer, Integer> col_id;
@@ -42,7 +42,7 @@ public class CustomersController implements Initializable, Viewable {
         col_division.setCellValueFactory(new PropertyValueFactory<>("division"));
         col_country.setCellValueFactory(new PropertyValueFactory<>("country"));
 
-        refreshTable();
+        refresh();
     }
     @Override
     public String getFxmlFileName() {
@@ -93,15 +93,16 @@ public class CustomersController implements Initializable, Viewable {
             Popup.error("No Customer Selected", "Please select a customer to delete.");
             return;
         }
-        try {
-            if (Popup.confirm("Delete Customer", "Are you sure you want to delete this customer?")) {
+
+        Popup.confirm("Delete Customer", "Are you sure you want to delete this customer?", () -> {
+            try {
                 customer.delete();
-                refreshTable();
-                Popup.info("Customer Deleted", "The customer was deleted successfully.");
+            } catch (SQLException e) {
+                Popup.error("Error Deleting Customer", "There was an error deleting the customer.");
             }
-        } catch (SQLException e) {
-            Popup.error("Error Deleting Customer", "There was an error deleting the customer.");
-        }
+            refresh();
+            Popup.info("Customer Deleted", "The customer was deleted successfully.");
+        });
     }
 
     public void on_add(MouseEvent mouseEvent) {
@@ -115,7 +116,8 @@ public class CustomersController implements Initializable, Viewable {
         close();
     }
 
-    public void refreshTable() {
+    @Override
+    public void refresh() {
         ObservableList<Customer> customers = FXCollections.observableList(Customer.getAll());
         table_view.setItems(customers);
     }

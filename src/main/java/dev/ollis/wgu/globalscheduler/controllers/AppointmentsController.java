@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
@@ -109,13 +110,41 @@ public class AppointmentsController implements Initializable, Viewable {
     }
 
     public void on_modify(MouseEvent mouseEvent) {
+        Appointment appointment = table_view.getSelectionModel().getSelectedItem();
+        if (appointment == null) {
+            Popup.error("No Selection", "Please select an appointment to modify.");
+            return;
+        }
+        new AppointmentFormController().show((view) -> {
+            AppointmentFormController controller = (AppointmentFormController) view;
+            controller.setParentController(this);
+            controller.setAppointment(appointment);
+        });
     }
 
     public void on_delete(MouseEvent mouseEvent) {
+        Appointment appointment = table_view.getSelectionModel().getSelectedItem();
+        if (appointment == null) {
+            Popup.error("No Selection", "Please select an appointment to delete.");
+            return;
+        }
+        Popup.confirm("Delete Appointment", "Are you sure you want to delete this appointment?", () -> {
+            try {
+                appointment.delete();
+                refreshTable();
+            } catch (SQLException e) {
+                Popup.error("Error", "There was an error deleting the appointment.");
+                return;
+            }
+            Popup.info("Success", "Appointment " + appointment.getId() + " of type " + appointment.getType() + " deleted successfully.");
+        });
     }
 
     public void on_add(MouseEvent mouseEvent) {
-        new AppointmentFormController().show();
+        new AppointmentFormController().show((view) -> {
+            AppointmentFormController controller = (AppointmentFormController) view;
+            controller.setParentController(this);
+        });
     }
 
     public void on_closed(MouseEvent mouseEvent) {

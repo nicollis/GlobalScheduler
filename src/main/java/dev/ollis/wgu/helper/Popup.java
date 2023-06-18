@@ -1,13 +1,9 @@
 package dev.ollis.wgu.helper;
 
-import dev.ollis.wgu.globalscheduler.ApplicationController;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 
-import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 /**
  * A class to handle popup dialogs
@@ -39,14 +35,18 @@ public class Popup {
      * @param message The message of the dialog
      * @return True if the user clicked OK, false otherwise
      */
-    public static boolean confirm(String title, String message) {
+    public static boolean confirm(String title, String message, Runnable onOk) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
 
         Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == ButtonType.OK;
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            onOk.run();
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -26,6 +26,6 @@ public class MainController implements Viewable {
     }
 
     public void on_exit(MouseEvent mouseEvent) {
-        close();
+        System.exit(0);
     }
 }

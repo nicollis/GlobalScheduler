@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 public class Customer implements Readable, Writable {
@@ -120,13 +121,17 @@ public class Customer implements Readable, Writable {
     @Override
     public void delete() throws SQLException {
         //Delete all appointments first
-        Appointment.getAllForCustomer(this).forEach(appointment -> {
-            try {
-                appointment.delete();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            Appointment.getAllForCustomer(this).forEach(appointment -> {
+                try {
+                    appointment.delete();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (NoSuchElementException e) {
+            //No appointments for this customer
+        }
 
         Writable.super.delete();
     }

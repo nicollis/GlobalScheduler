@@ -35,6 +35,6 @@
       <Button fx:id="btn_save" layoutX="313.0" layoutY="528.0" mnemonicParsing="false" onMouseReleased="#on_save" text="Save" />
       <Button fx:id="btn_cancel" layoutX="379.0" layoutY="528.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancel" />
       <Button fx:id="btn_new_customer" layoutX="454.0" layoutY="528.0" mnemonicParsing="false" onMouseReleased="#on_new_customer" text="New Customer" />
-      <Text layoutX="125.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Appointment:" />
+      <Text fx:id="window_title" layoutX="125.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Appointment:" />
    </children>
 </AnchorPane>

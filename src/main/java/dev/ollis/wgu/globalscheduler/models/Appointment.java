@@ -38,6 +38,18 @@ public class Appointment implements Readable, Writable {
         }
     }
 
+    public Appointment(String title, String description, String location, String type, Timestamp start, Timestamp end, int customerId, int userId, int contactId) {
+        setTitle(title);
+        setDescription(description);
+        setLocation(location);
+        setType(type);
+        setStart(start);
+        setEnd(end);
+        setCustomerId(customerId);
+        setUserId(userId);
+        setContactId(contactId);
+    }
+
     public int getId() {
         return id;
     }
@@ -180,10 +192,9 @@ public class Appointment implements Readable, Writable {
         return JDBC.getAllFromQuery(sql, params, Appointment.class);
     }
 
-    public static List<Type> getAllTypes() {
+    public static List<String> getAllTypes() {
         String sql = "SELECT DISTINCT Type FROM appointments";
-        List<Type> results = JDBC.getAllFromQuery(sql, null, Type.class);
-        return results;
+        return JDBC.getAllFromQuery(sql, null, Type.class).stream().map(Type::toString).toList();
     }
 
     public static class Type implements Readable {
