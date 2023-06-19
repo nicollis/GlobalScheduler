@@ -1,40 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="712.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.AppointmentFormController">
+<AnchorPane prefHeight="495.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.ollis.wgu.globalscheduler.controllers.AppointmentFormController">
    <children>
-      <TextField fx:id="input_id" disable="true" editable="false" layoutX="219.0" layoutY="141.0" promptText="auto-generated" />
-      <TextField fx:id="input_title" layoutX="219.0" layoutY="176.0" />
-      <TextField fx:id="input_description" layoutX="219.0" layoutY="212.0" />
-      <ComboBox fx:id="combo_location" layoutX="220.0" layoutY="248.0" prefHeight="26.0" prefWidth="186.0" />
-      <ComboBox fx:id="combo_type" editable="true" layoutX="220.0" layoutY="283.0" prefHeight="26.0" prefWidth="186.0" />
-      <DatePicker fx:id="date_start" layoutX="219.0" layoutY="318.0" prefHeight="26.0" prefWidth="124.0" />
-      <ChoiceBox fx:id="choice_hour_start" layoutX="350.0" layoutY="319.0" prefHeight="26.0" prefWidth="56.0" />
-      <Text layoutX="409.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
-      <ChoiceBox fx:id="choice_minute_start" layoutX="416.0" layoutY="319.0" prefHeight="26.0" prefWidth="56.0" />
-      <DatePicker fx:id="date_end" layoutX="220.0" layoutY="354.0" prefHeight="26.0" prefWidth="124.0" />
-      <ChoiceBox fx:id="choice_hour_end" layoutX="350.0" layoutY="355.0" prefHeight="26.0" prefWidth="56.0" />
-      <Text layoutX="409.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
-      <ChoiceBox fx:id="choice_minute_end" layoutX="416.0" layoutY="354.0" prefHeight="26.0" prefWidth="56.0" />
-      <ComboBox fx:id="combo_customer" layoutX="219.0" layoutY="391.0" prefHeight="26.0" prefWidth="186.0" />
-      <ComboBox fx:id="combo_user" layoutX="220.0" layoutY="426.0" prefHeight="26.0" prefWidth="186.0" />
-      <ComboBox fx:id="combo_contact" layoutX="220.0" layoutY="461.0" prefHeight="26.0" prefWidth="186.0" />
-      <Text layoutX="107.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="409.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Text layoutX="107.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
-      <Button fx:id="btn_save" layoutX="313.0" layoutY="528.0" mnemonicParsing="false" onMouseReleased="#on_save" text="Save" />
-      <Button fx:id="btn_cancel" layoutX="379.0" layoutY="528.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancel" />
-      <Button fx:id="btn_new_customer" layoutX="454.0" layoutY="528.0" mnemonicParsing="false" onMouseReleased="#on_new_customer" text="New Customer" />
-      <Text fx:id="window_title" layoutX="125.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Appointment:" />
+      <TextField fx:id="input_id" disable="true" editable="false" layoutX="125.0" layoutY="61.0" promptText="auto-generated" />
+      <TextField fx:id="input_title" layoutX="125.0" layoutY="96.0" />
+      <TextField fx:id="input_description" layoutX="125.0" layoutY="132.0" />
+      <ComboBox fx:id="combo_location" layoutX="126.0" layoutY="168.0" prefHeight="26.0" prefWidth="186.0" />
+      <ComboBox fx:id="combo_type" editable="true" layoutX="126.0" layoutY="203.0" prefHeight="26.0" prefWidth="186.0" />
+      <DatePicker fx:id="date_start" layoutX="125.0" layoutY="238.0" prefHeight="26.0" prefWidth="124.0" />
+      <ChoiceBox fx:id="choice_hour_start" layoutX="256.0" layoutY="239.0" prefHeight="26.0" prefWidth="56.0" />
+      <Text layoutX="315.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
+      <ChoiceBox fx:id="choice_minute_start" layoutX="322.0" layoutY="239.0" prefHeight="26.0" prefWidth="56.0" />
+      <DatePicker fx:id="date_end" layoutX="126.0" layoutY="274.0" prefHeight="26.0" prefWidth="124.0" />
+      <ChoiceBox fx:id="choice_hour_end" layoutX="256.0" layoutY="275.0" prefHeight="26.0" prefWidth="56.0" />
+      <Text layoutX="315.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":" />
+      <ChoiceBox fx:id="choice_minute_end" layoutX="322.0" layoutY="274.0" prefHeight="26.0" prefWidth="56.0" />
+      <ComboBox fx:id="combo_customer" layoutX="125.0" layoutY="311.0" prefHeight="26.0" prefWidth="186.0" />
+      <ComboBox fx:id="combo_user" layoutX="126.0" layoutY="346.0" prefHeight="26.0" prefWidth="186.0" />
+      <ComboBox fx:id="combo_contact" layoutX="126.0" layoutY="381.0" prefHeight="26.0" prefWidth="186.0" />
+      <Text layoutX="13.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Location:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Text layoutX="13.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact:" textAlignment="RIGHT" wrappingWidth="107.21630859375" />
+      <Button fx:id="btn_save" layoutX="219.0" layoutY="448.0" mnemonicParsing="false" onMouseReleased="#on_save" text="Save" />
+      <Button fx:id="btn_cancel" layoutX="285.0" layoutY="448.0" mnemonicParsing="false" onMouseReleased="#on_cancel" text="Cancel" />
+      <Button fx:id="btn_new_customer" layoutX="360.0" layoutY="448.0" mnemonicParsing="false" onMouseReleased="#on_new_customer" text="New Customer" />
+      <Text fx:id="window_title" layoutX="31.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Appointment:" />
    </children>
 </AnchorPane>

@@ -15,7 +15,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable, Viewable {
@@ -99,7 +98,7 @@ public class CustomerFormController implements Initializable, Viewable {
             customer.save();
             parentView.refresh();
             close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Popup.error("Error saving customer", e.getMessage());
         }
     }

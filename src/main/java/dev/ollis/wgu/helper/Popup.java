@@ -2,8 +2,11 @@ package dev.ollis.wgu.helper;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * A class to handle popup dialogs
@@ -61,5 +64,19 @@ public class Popup {
         alert.setContentText(message);
 
         alert.showAndWait();
+    }
+
+    public static <T> boolean showComboBoxDialog(List<T> options, String title, String message, Consumer<T> onOk) {
+        ChoiceDialog<T> dialog = new ChoiceDialog<>(options.get(0), options);
+        dialog.setTitle(title);
+        dialog.setHeaderText(null);
+        dialog.setContentText(message);
+
+        Optional<T> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            onOk.accept(result.get());
+            return true;
+        }
+        return false;
     }
 }

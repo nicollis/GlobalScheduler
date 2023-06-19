@@ -4,9 +4,7 @@ import dev.ollis.wgu.globalscheduler.models.Readable;
 import dev.ollis.wgu.globalscheduler.models.Writable;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.function.Function;
 
 public abstract class JDBC {
@@ -113,5 +111,34 @@ public abstract class JDBC {
             }
         }
         return stmt;
+    }
+
+    public static List<Map<String, Object>> getResultSetFromQuery(String sql, List<Object> params) {
+        return executeQuery(sql, params, JDBC::resultsSetToList);
+    }
+
+    private static List<Map<String, Object>> resultsSetToList(ResultSet rs) {
+        try {
+            // get column names
+            List<String> columnNames = new ArrayList<>();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                columnNames.add(rsmd.getColumnName(i));
+            }
+
+            // fetch data rows
+            List<Map<String, Object>> list = new ArrayList<>();
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (String col : columnNames) {
+                    row.put(col, rs.getObject(col));
+                }
+                list.add(row);
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

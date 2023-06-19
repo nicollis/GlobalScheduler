@@ -14,7 +14,7 @@ public interface Writable {
     String getTableName();
     Map<String, Supplier<Object>> getDatabaseMap();
 
-    default void save() throws SQLException {
+    default void save() throws Exception {
         if (getId() == 0) {
             insert(this);
         } else {

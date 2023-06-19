@@ -10,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -163,12 +162,11 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
 
         try {
             appointment.save();
-        } catch (SQLException e) {
+            parentController.refresh();
+            close();
+        } catch (Exception e) {
             Popup.error("Error saving appointment", e.getMessage());
         }
-
-        parentController.refreshTable();
-        close();
     }
 
     public void on_cancel(MouseEvent mouseEvent) {

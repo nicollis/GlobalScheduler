@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 public class ApplicationController extends Application {
     public static ResourceBundle text;
     public static ZoneId zone;
+    public static int[] businessHours = {8, 22};
+
     @Override
     public void start(Stage stage) {
         new LoginController().show();
@@ -20,6 +22,7 @@ public class ApplicationController extends Application {
 //        Locale.setDefault(Locale.FRENCH);
         Locale userLocal = Locale.getDefault();
         text = ResourceBundle.getBundle("lang", userLocal);
+//        zone = ZoneId.of(ZoneId.SHORT_IDS.get("CST"));
         zone = ZoneId.systemDefault();
         launch();
     }

@@ -32,6 +32,8 @@ public class CustomersController implements Initializable, Viewable, Refreshable
     public TableColumn<Customer, Division> col_division;
     public TableColumn<Customer, Country> col_country;
 
+    private Refreshable parentView;
+
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -52,6 +54,10 @@ public class CustomersController implements Initializable, Viewable, Refreshable
     @Override
     public Node windowElement() {
         return table_view;
+    }
+
+    public void setParentView(Refreshable parentView) {
+        this.parentView = parentView;
     }
 
     public void on_search_input_changed(KeyEvent inputMethodEvent) {
@@ -120,6 +126,10 @@ public class CustomersController implements Initializable, Viewable, Refreshable
     public void refresh() {
         ObservableList<Customer> customers = FXCollections.observableList(Customer.getAll());
         table_view.setItems(customers);
+
+        if (parentView != null) {
+            parentView.refresh();
+        }
     }
 
     public void on_appointments(MouseEvent mouseEvent) {
@@ -133,6 +143,7 @@ public class CustomersController implements Initializable, Viewable, Refreshable
             new AppointmentsController().show((view) -> {
                 AppointmentsController appointmentsController = (AppointmentsController) view;
                 appointmentsController.setCustomer(customer);
+                appointmentsController.setParentView(this);
             });
         } catch (NoSuchElementException e) {
             Popup.error("No appointments", "There was no appointment found for the selected customer.");
