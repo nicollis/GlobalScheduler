@@ -9,7 +9,7 @@ import java.time.temporal.TemporalAdjusters;
 // the general idea is that we convert the timestamp to a LocalDateTime
 // then we convert that to a ZonedDateTime, shit the time to the expect zone
 // and finally convert back into a timestamp
-public class TimeUtils {
+public abstract class TimeUtils {
     public static Timestamp fromUTC(Timestamp utc, ZoneId targetZone) {
         return convert(utc, ZoneId.of("UTC"), targetZone);
     }

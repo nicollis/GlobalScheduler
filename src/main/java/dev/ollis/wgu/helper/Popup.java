@@ -14,7 +14,7 @@ import java.util.function.Consumer;
  */
 
 // Although independent of the rest of the application, this class is expects a "lang" resource bundle to be present
-public class Popup {
+public abstract class Popup {
 //    private static final ResourceBundle text = ResourceBundle.getBundle("lang", Locale.getDefault());
 //    private static final ButtonType okButton = new ButtonType(text.getString("general.ok"), ButtonBar.ButtonData.OK_DONE);
 
