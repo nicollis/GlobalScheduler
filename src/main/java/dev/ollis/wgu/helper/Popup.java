@@ -66,17 +66,13 @@ public abstract class Popup {
         alert.showAndWait();
     }
 
-    public static <T> boolean showComboBoxDialog(List<T> options, String title, String message, Consumer<T> onOk) {
+    public static <T> void showComboBoxDialog(List<T> options, String title, String message, Consumer<T> onOk) {
         ChoiceDialog<T> dialog = new ChoiceDialog<>(options.get(0), options);
         dialog.setTitle(title);
         dialog.setHeaderText(null);
         dialog.setContentText(message);
 
         Optional<T> result = dialog.showAndWait();
-        if (result.isPresent()) {
-            onOk.accept(result.get());
-            return true;
-        }
-        return false;
+        result.ifPresent(onOk);
     }
 }
