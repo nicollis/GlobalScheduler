@@ -2,6 +2,7 @@ package dev.ollis.wgu.globalscheduler.controllers;
 
 import dev.ollis.wgu.globalscheduler.ApplicationController;
 import dev.ollis.wgu.globalscheduler.models.User;
+import dev.ollis.wgu.helper.Logging;
 import dev.ollis.wgu.helper.Popup;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -36,9 +37,11 @@ public class LoginController implements Viewable {
     public void on_login(MouseEvent mouseEvent) {
         try {
             User user = User.login(username.getText(), password.getText());
+            Logging.loginSuccessful(user.toString());
             new MainController().show();
             close();
         } catch (NoSuchElementException e) {
+            Logging.loginFailed(username.getText());
             Popup.error(ApplicationController.text.getString("error.login_failed.title"),
                     ApplicationController.text.getString("error.login_failed.message"));
         }

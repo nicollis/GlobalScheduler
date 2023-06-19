@@ -89,4 +89,12 @@ public abstract class TimeUtils {
         String lastDayString = lastDay.format(formatter);
         return firstDayString + " - " + lastDayString + " " + year;
     }
+
+    public static String now() {
+        return LocalDateTime.now().toString();
+    }
+
+    public static String today() {
+        return LocalDate.now().toString();
+    }
 }
