@@ -8,9 +8,23 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Main application class
+ */
 public class ApplicationController extends Application {
+    /**
+     * The text resource bundle
+     */
     public static ResourceBundle text;
+
+    /**
+     * The user's time zone
+     */
     public static ZoneId zone;
+
+    /**
+     * The business hours
+     */
     public static int[] businessHours = {8, 22};
 
     @Override
@@ -18,6 +32,10 @@ public class ApplicationController extends Application {
         new LoginController().show();
     }
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) {
 //        Locale.setDefault(Locale.FRENCH);
         Locale userLocal = Locale.getDefault();

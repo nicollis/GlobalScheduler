@@ -19,6 +19,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Controller for the Customers view.
+ * It implements Initializable, Viewable, and Refreshable.
+ */
 public class CustomersController implements Initializable, Viewable, Refreshable {
 
     public TableView<Customer> table_view;
@@ -34,6 +38,16 @@ public class CustomersController implements Initializable, Viewable, Refreshable
 
     private Refreshable parentView;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -46,6 +60,7 @@ public class CustomersController implements Initializable, Viewable, Refreshable
 
         refresh();
     }
+
     @Override
     public String getFxmlFileName() {
         return "customers-view.fxml";
@@ -56,10 +71,18 @@ public class CustomersController implements Initializable, Viewable, Refreshable
         return table_view;
     }
 
+    /**
+     * Sets the parent view to refresh when this view is refreshed.
+     * @param parentView
+     */
     public void setParentView(Refreshable parentView) {
         this.parentView = parentView;
     }
 
+    /**
+     * Called when the search input is changed.
+     * @param inputMethodEvent
+     */
     public void on_search_input_changed(KeyEvent inputMethodEvent) {
         String value = input_customer_search.getText();
         ObservableList<Customer> customers;
@@ -80,6 +103,10 @@ public class CustomersController implements Initializable, Viewable, Refreshable
         table_view.setItems(customers);
     }
 
+    /**
+     * Called when the modify button is clicked.
+     * @param mouseEvent
+     */
     public void on_modify(MouseEvent mouseEvent) {
         Customer customer = table_view.getSelectionModel().getSelectedItem();
         if (customer == null) {
@@ -93,6 +120,10 @@ public class CustomersController implements Initializable, Viewable, Refreshable
         });
     }
 
+    /**
+     * Called when the delete button is clicked.
+     * @param mouseEvent
+     */
     public void on_delete(MouseEvent mouseEvent) {
         Customer customer = table_view.getSelectionModel().getSelectedItem();
         if (customer == null) {
@@ -111,6 +142,10 @@ public class CustomersController implements Initializable, Viewable, Refreshable
         });
     }
 
+    /**
+     * Called when the add button is clicked.
+     * @param mouseEvent
+     */
     public void on_add(MouseEvent mouseEvent) {
         new CustomerFormController().show((formView) -> {
             CustomerFormController view = (CustomerFormController) formView;
@@ -118,10 +153,17 @@ public class CustomersController implements Initializable, Viewable, Refreshable
         });
     }
 
+    /**
+     * Called when the close button is clicked.
+     * @param mouseEvent
+     */
     public void on_closed(MouseEvent mouseEvent) {
         close();
     }
 
+    /**
+     * Refreshes the view.
+     */
     @Override
     public void refresh() {
         ObservableList<Customer> customers = FXCollections.observableList(Customer.getAll());
@@ -132,6 +174,10 @@ public class CustomersController implements Initializable, Viewable, Refreshable
         }
     }
 
+    /**
+     * Called when the appointments button is clicked.
+     * @param mouseEvent
+     */
     public void on_appointments(MouseEvent mouseEvent) {
         Customer customer = table_view.getSelectionModel().getSelectedItem();
         if (customer == null) {

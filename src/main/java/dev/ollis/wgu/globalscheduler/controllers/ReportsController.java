@@ -13,6 +13,10 @@ import javafx.scene.text.Text;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller for the reports view.
+ * Implements the Viewable interface.
+ */
 public class ReportsController implements Viewable {
     public TableView<Map<String, Object>> table_view;
 
@@ -20,11 +24,21 @@ public class ReportsController implements Viewable {
 
     // Instance methods
 
+    /**
+     * Build the report table.
+     * @param report_data
+     * @param title
+     */
     public void buildReport(List<Map<String, Object>> report_data, String title) {
         this.title.setText(title);
         buildTable(report_data);
     }
 
+    /**
+     * Build the table from the report data.
+     * This dynamically creates the columns and populates the table.
+     * @param rs
+     */
     private void buildTable(List<Map<String, Object>> rs) {
         if (rs == null || rs.isEmpty()) {
             Popup.error("Error", "Could not build report.");
@@ -54,6 +68,11 @@ public class ReportsController implements Viewable {
     }
 
     // JavaFX event handlers
+
+    /**
+     * Close the window.
+     * @param mouseEvent
+     */
     public void on_close(MouseEvent mouseEvent) {
         close();
     }

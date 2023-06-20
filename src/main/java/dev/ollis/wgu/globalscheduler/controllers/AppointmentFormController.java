@@ -14,6 +14,10 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * This class represents the controller for the appointment form view.
+ * It implements the Initializable, Viewable, and Refreshable interfaces.
+ */
 public class AppointmentFormController implements Initializable, Viewable, Refreshable {
 
     public Text window_title;
@@ -41,8 +45,16 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
     private AppointmentsController parentController;
     private Appointment appointment;
 
+    /**
+     * This method initializes the controller.
+     * It sets up the choice boxes and combo boxes with the appropriate data.
+     * It also sets the current user as the default value for the user combo box.
+     * @param url The URL of the FXML file.
+     * @param resourceBundle The resource bundle for the FXML file.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Set up the choice boxes with the appropriate data
         choice_hour_start.setItems(FXCollections.observableArrayList(0, 1, 2, 3, 4, 5, 6, 7, 8,
                 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23));
         choice_minute_start.setItems(FXCollections.observableArrayList(0, 15, 30, 45));
@@ -50,6 +62,7 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
                 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23));
         choice_minute_end.setItems(FXCollections.observableArrayList(0, 15, 30, 45));
 
+        // Set up the combo boxes with the appropriate data
         combo_location.setItems(FXCollections.observableArrayList(Location.getInstance().getLocations()));
         combo_type.setItems(FXCollections.observableArrayList(Appointment.getAllTypes()));
 
@@ -57,6 +70,7 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
         combo_contact.setItems(FXCollections.observableArrayList(Contact.getAll()));
         combo_user.setItems(FXCollections.observableArrayList(User.getAll()));
 
+        // Set the current user as the default value for the user combo box
         combo_user.setValue(User.getCurrentUser());
     }
 
@@ -70,6 +84,9 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
         return input_id;
     }
 
+    /**
+     * Refreshes the customer combo box with the latest data from the database.
+     */
     @Override
     public void refresh() {
         List<Customer> customers = Customer.getAll();
@@ -77,6 +94,11 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
         combo_customer.setValue(customers.get(customers.size()-1));
     }
 
+    /**
+     * When loading in an appointment to modify we set the appointment
+     * and relative ui elements to the appointment's data.
+     * @param mouseEvent The mouse event.
+     */
     public void setAppointment(Appointment appointment) {
         this.window_title.setText("Edit Appointment");
         this.appointment = appointment;
@@ -99,24 +121,44 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
         choice_minute_end.setValue(appointment.getEnd().toLocalDateTime().getMinute());
     }
 
+    /**
+     * Sets the parent controller for callbacks
+     * @param parentController
+     */
     public void setParentController(AppointmentsController parentController) {
         this.parentController = parentController;
     }
 
+    /**
+     * Gets the parent controller for callbacks
+     * @param parentController
+     */
     public void getParentController(AppointmentsController parentController) {
         this.parentController = parentController;
     }
 
+    /**
+     * Creates a timestamp from our UI fields
+     * @return the start time as a timestamp
+     */
     public Timestamp getStart() {
         return Timestamp.valueOf(date_start.getValue().atTime(choice_hour_start.getValue(), choice_minute_start.getValue()));
     }
 
+    /**
+     * Creates a timestamp from our UI fields
+     * @return the end time as a timestamp
+     */
     public Timestamp getEnd() {
         return Timestamp.valueOf(date_end.getValue().atTime(choice_hour_end.getValue(), choice_minute_end.getValue()));
     }
 
     // JavaFX event handlers
 
+    /** 
+     * Validation and saving of the appointment.
+     * @param mouseEvent The mouse event.
+     */
     public void on_save(MouseEvent mouseEvent) {
         // Nothing can be blank
         if (input_title.getText().isBlank() ||
@@ -169,10 +211,18 @@ public class AppointmentFormController implements Initializable, Viewable, Refre
         }
     }
 
+    /**
+     * Closes the window
+     * @param mouseEvent
+     */
     public void on_cancel(MouseEvent mouseEvent) {
         close();
     }
 
+    /**
+     * Opens the customer form to create a new customer
+     * @param mouseEvent
+     */
     public void on_new_customer(MouseEvent mouseEvent) {
         new CustomerFormController().show((view) -> {
             CustomerFormController controller = (CustomerFormController) view;

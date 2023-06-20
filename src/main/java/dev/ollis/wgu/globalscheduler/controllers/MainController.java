@@ -18,6 +18,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
+/**
+ * Main controller for the main view.
+ * Implements Initializable and Viewable.
+ */
 public class MainController implements Initializable, Viewable {
     public Button btn_customers;
     public AnchorPane appointment_view;
@@ -32,6 +36,17 @@ public class MainController implements Initializable, Viewable {
         return btn_customers;
     }
 
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Used to check if the user has an appointment within 15 minutes of logging in.
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Appointment appointment = hasAppointmentWithin15Minutes();
@@ -47,6 +62,10 @@ public class MainController implements Initializable, Viewable {
         }
     }
 
+    /**
+     * Checks if the user has an appointment within 15 minutes of logging in.
+     * @return Appointment if the user has an appointment within 15 minutes, null otherwise.
+     */
     public Appointment hasAppointmentWithin15Minutes() {
         List<Appointment> appointments = Appointment.getAllForUser(User.getCurrentUser());
         for (Appointment appointment : appointments) {
@@ -59,10 +78,19 @@ public class MainController implements Initializable, Viewable {
 
     // JavaFX event handlers
 
+    /**
+     * Shows the customers controller
+     * @param mouseEvent
+     */
     public void on_customers(MouseEvent mouseEvent) {
         new CustomersController().show();
     }
 
+    /**
+     * Shows the monthly reports view
+     * Uses a lambda to provide the report data to the controller.
+     * @param mouseEvent
+     */
     public void on_monthly_reports(MouseEvent mouseEvent) {
         new ReportsController().show((view) -> {
             ReportsController controller = (ReportsController) view;
@@ -74,6 +102,11 @@ public class MainController implements Initializable, Viewable {
         });
     }
 
+    /**
+     * Shows the contact reports view
+     * Uses a lambda to provide the report data to the controller.
+     * @param mouseEvent
+     */
     public void on_contact_reports(MouseEvent mouseEvent) {
         Popup.showComboBoxDialog(Contact.getAll(), "Select a contact", "Contact", (contact) -> {
             new ReportsController().show((view) -> {
@@ -87,6 +120,11 @@ public class MainController implements Initializable, Viewable {
         });
     }
 
+    /**
+     * Shows the customer reports view
+     * Uses a lambda to provide the report data to the controller.
+     * @param mouseEvent
+     */
     public void on_customer_reports(MouseEvent mouseEvent) {
         Popup.showComboBoxDialog(Customer.getAll(), "Select a customer", "Customer", (customer) -> {
             new ReportsController().show((view) -> {
@@ -100,6 +138,10 @@ public class MainController implements Initializable, Viewable {
         });
     }
 
+    /**
+     * Closes the application
+     * @param mouseEvent
+     */
     public void on_exit(MouseEvent mouseEvent) {
         System.exit(0);
     }

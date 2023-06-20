@@ -7,6 +7,11 @@ import java.sql.*;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * JDBC Class
+ * Abstract class for handling JDBC connections
+ * Provides helper methods for executing queries and updates
+ */
 public abstract class JDBC {
 
     // Connection Information
@@ -17,6 +22,10 @@ public abstract class JDBC {
     // Driver version 8.0.25
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 
+    /**
+     * Open Connection
+     * @return Connection
+     */
     public static Connection openConnection() {
         // Open Connection
         try {
@@ -31,6 +40,10 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Close Connection
+     * @param conn Connection
+     */
     public static void closeConnection(Connection conn) {
         // Close Connection
         try {
@@ -40,6 +53,15 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Get First From Query
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @param clazz Class of object to return
+     * @return Object
+     * @param <T> Class of object to return
+     * @throws NoSuchElementException if no results found
+     */
     public static <T extends Readable> T getFirstFromQuery(String sql, List<Object> params, Class<T> clazz) throws NoSuchElementException {
         return executeQuery(sql, params, rs -> {
             try {
@@ -53,6 +75,15 @@ public abstract class JDBC {
         });
     }
 
+    /**
+     * Get All From Query
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @param clazz Class of object to return
+     * @return List of objects
+     * @param <T> Class of object to return
+     * @throws NoSuchElementException if no results found
+     */
     public static <T extends Readable> List<T> getAllFromQuery(String sql, List<Object> params, Class<T> clazz) throws NoSuchElementException {
         return executeQuery(sql, params, rs -> {
             try {
@@ -72,6 +103,13 @@ public abstract class JDBC {
         });
     }
 
+    /**
+     * Save Object
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @param <T> Class of object to return
+     * @throws SQLException if no rows changed
+     */
     public static <T extends Writable> void saveObject(String sql, List<Object> params) throws SQLException  {
         int rowChanged =  executeUpdate(sql, params);
         if (rowChanged == 0) {
@@ -79,6 +117,15 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Execute Query
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @param handler Function to handle ResultSet
+     * @return Object
+     * @param <T> Class of object to return
+     * @throws RuntimeException if error occurs
+     */
     private static <T> T executeQuery(String sql, List<Object> params, Function<ResultSet, T> handler) throws RuntimeException {
         Connection connect = JDBC.openConnection();
         try {
@@ -92,6 +139,13 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Execute Update
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @return int number of rows changed
+     * @throws SQLException if error occurs
+     */
     private static int executeUpdate(String sql, List<Object> params) throws SQLException {
         Connection connect = JDBC.openConnection();
         try {
@@ -102,6 +156,15 @@ public abstract class JDBC {
         }
     }
 
+    /**
+     * Prepared Statement
+     * helper method for creating prepared statements
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @param connect Connection
+     * @return PreparedStatement
+     * @throws SQLException
+     */
     private static PreparedStatement preparedStatement(String sql, List<Object> params, Connection connect) throws SQLException {
         assert connect != null;
         PreparedStatement stmt = connect.prepareStatement(sql);
@@ -113,10 +176,21 @@ public abstract class JDBC {
         return stmt;
     }
 
+    /**
+     * Get ResultSet From Query
+     * @param sql SQL Query
+     * @param params List of parameters
+     * @return List of Maps
+     */
     public static List<Map<String, Object>> getResultSetFromQuery(String sql, List<Object> params) {
         return executeQuery(sql, params, JDBC::resultsSetToList);
     }
 
+    /**
+     * Results Set To List
+     * @param rs ResultSet
+     * @return List of Maps
+     */
     private static List<Map<String, Object>> resultsSetToList(ResultSet rs) {
         try {
             // get column names

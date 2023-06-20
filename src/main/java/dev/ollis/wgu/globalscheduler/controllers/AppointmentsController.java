@@ -25,6 +25,10 @@ import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
+/**
+ * This class represents the controller for the appointments view.
+ * It implements the Initializable, Viewable, and Refreshable interfaces.
+ */
 public class AppointmentsController implements Initializable, Viewable, Refreshable {
     public Button btn_close;
     public Button btn_last;
@@ -56,14 +60,25 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
     private int selectedWeek = 1;
     private ViewType selectedView = ViewType.ALL;
 
+    /**
+     * This enum represents the different types of views that can be selected.
+     */
     public enum ViewType {
         ALL,
         MONTHLY,
         WEEKLY
     }
 
+    /**
+     * This method initializes the controller.
+     * It sets up the table view with the appropriate data and cell factories.
+     * It also sets up the search input field with a listener for filtering the appointments.
+     * @param url The URL of the FXML file.
+     * @param resourceBundle The resource bundle for the FXML file.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Set up the table view with the appropriate data and cell factories
         col_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_title.setCellValueFactory(new PropertyValueFactory<>("title"));
         col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -101,6 +116,9 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         return table_view;
     }
 
+    /**
+     * This method refreshes the appointments view.
+     */
     @Override
     public void refresh() {
         List<Appointment> appointments = null;
@@ -125,6 +143,9 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         }
     }
 
+    /**
+     * This method sets the ui to view all appointments.
+     */
     public void viewAll() {
         btn_last.setDisable(true);
         btn_next.setDisable(true);
@@ -132,21 +153,34 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
 
     }
 
+    /**
+     * This method sets the ui to view appointments for the selected month.
+     */
     public void viewMonthly() {
         viewMonthlyOrWeekly();
         text_view_indicator.setText(Month.of(selectedMonth).getDisplayName(TextStyle.FULL, Locale.getDefault()));
     }
 
+    /** 
+     * This method sets the ui to view appointments for the selected week.
+     */
     public void viewWeekly() {
         viewMonthlyOrWeekly();
         text_view_indicator.setText(TimeUtils.getWeekRangeString(selectedYear, selectedWeek));
     }
 
+    /**
+     * This method sets the ui to view appointments for the selected month or week.
+     */
     public void viewMonthlyOrWeekly() {
         btn_last.setDisable(false);
         btn_next.setDisable(false);
     }
 
+    /**
+     * This method handles setting the UI to view appointments for one customer
+     * @param customer
+     */
     public void setCustomer(Customer customer) {
         this.customer = customer;
         btn_close.setVisible(true);
@@ -158,26 +192,37 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         refresh();
     }
 
+    /**
+     * This method sets the parent view.
+     */
     public void setParentView(Refreshable parentView) {
         this.parentView = parentView;
     }
 
     // JavaFX Event Handlers
 
+    /**
+     * This method handles the event when a user is searching for an appointment.
+     * @param keyEvent
+     */
     public void on_search_input_changed(KeyEvent keyEvent) {
         String value = input_search.getText();
         ObservableList<Appointment> appointments;
 
         try {
+            // Resets if a valid is blank
             if (value.isBlank()) {
                 refresh();
                 return;
+            // Handles searching an ID
             } else if (value.matches("\\d+")) {
                 appointments = FXCollections.observableList(
                         List.of(Appointment.find(Integer.parseInt(value))));
+            // Handles searching a name
             } else {
                 appointments = FXCollections.observableList(Appointment.getAllForTitle(value, customer));
             }
+        // When no appointments are found for the given search term an error is displayed
         } catch (NoSuchElementException e) {
             Popup.error("No Results", "No Customers found for the given search term.");
             input_search.setText("");
@@ -187,10 +232,17 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         table_view.setItems(appointments);
     }
 
+    /**
+     * This method handles the button when users refresh the data
+     */
     public void on_refresh(MouseEvent mouseEvent) {
         refresh();
     }
 
+    /**
+     * This method handles changing the view to the previous month or week
+     * @param mouseEvent
+     */
     public void on_last(MouseEvent mouseEvent) {
         if (selectedView == ViewType.MONTHLY) {
             selectedMonth = selectedMonth == 1 ? 12 : selectedMonth - 1;
@@ -208,6 +260,10 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         refresh();
     }
 
+    /**
+     * This method handles changing the view to the next month or week
+     * @param mouseEvent
+     */
     public void on_next(MouseEvent mouseEvent) {
         if (selectedView == ViewType.MONTHLY) {
             selectedMonth = selectedMonth == 12 ? 1 : selectedMonth + 1;
@@ -225,6 +281,12 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         refresh();
     }
 
+    /**
+     * This method handles the even when a user wants to modify an appointment
+     * This method uses a lambda to pass the appointment to the form controller
+     * after it is created as well as sets the parent controller to this controller.
+     * @param mouseEvent
+     */
     public void on_modify(MouseEvent mouseEvent) {
         Appointment appointment = table_view.getSelectionModel().getSelectedItem();
         if (appointment == null) {
@@ -238,12 +300,19 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         });
     }
 
+    /**
+     * This method handles the event when a user wants to delete an appointment.
+     * This method uses a lambda to handle the "onOk" event of the confirmation popup.
+     * @param mouseEvent
+     */
     public void on_delete(MouseEvent mouseEvent) {
         Appointment appointment = table_view.getSelectionModel().getSelectedItem();
         if (appointment == null) {
             Popup.error("No Selection", "Please select an appointment to delete.");
             return;
         }
+        
+        // Get user confirmation before deleting
         Popup.confirm("Delete Appointment", "Are you sure you want to delete this appointment?", () -> {
             try {
                 appointment.delete();
@@ -256,6 +325,11 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         });
     }
 
+    /**
+     * This method handles the event when a user wants to add an appointment.
+     * This method uses a lambda to pass the parent controller to the form controller.
+     * @param mouseEvent
+     */
     public void on_add(MouseEvent mouseEvent) {
         new AppointmentFormController().show((view) -> {
             AppointmentFormController controller = (AppointmentFormController) view;
@@ -263,6 +337,10 @@ public class AppointmentsController implements Initializable, Viewable, Refresha
         });
     }
 
+    /**
+     * This method handles the event when a user wants to close the view.
+     * @param mouseEvent
+     */
     public void on_closed(MouseEvent mouseEvent) {
         close();
     }

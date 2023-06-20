@@ -13,6 +13,10 @@ import javafx.scene.text.Text;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Controller for the login view
+ * it implements the Viewable interface to allow for easy loading of the view
+ */
 public class LoginController implements Viewable {
     public TextField username;
     public PasswordField password;
@@ -24,6 +28,9 @@ public class LoginController implements Viewable {
     public Text label_location_id;
     public Text label_location;
 
+    /**
+     * Initialize the view and set the text based on the language
+     */
     public void initialize() {
         application_name.setText(ApplicationController.text.getString("general.application_name"));
         label_username.setText(ApplicationController.text.getString("login.username"));
@@ -34,6 +41,11 @@ public class LoginController implements Viewable {
         label_location_id.setText(ApplicationController.zone.toString());
     }
 
+    /**
+     * Attempt to login the user
+     * Logs the attempt and shows an error if the login fails
+     * @param mouseEvent
+     */
     public void on_login(MouseEvent mouseEvent) {
         try {
             User user = User.login(username.getText(), password.getText());
@@ -47,6 +59,10 @@ public class LoginController implements Viewable {
         }
     }
 
+    /**
+     * Close the window
+     * @param mouseEvent
+     */
     public void on_cancel(MouseEvent mouseEvent) {
         close();
     }

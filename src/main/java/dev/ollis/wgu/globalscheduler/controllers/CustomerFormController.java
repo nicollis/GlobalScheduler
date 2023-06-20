@@ -17,6 +17,11 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** 
+ * This is the controller for the customer form view. It is used for both creating and editing customers.
+ * It implements the Initializable interface so that it can be used as a controller for an FXML view.
+ * It also implements the Viewable interface so it has helpers for showing and closing the view.
+ */
 public class CustomerFormController implements Initializable, Viewable {
     public TextField input_id;
     public TextField input_name;
@@ -30,10 +35,18 @@ public class CustomerFormController implements Initializable, Viewable {
     public Text title;
     private Refreshable parentView;
 
+    /**
+     * This method is used to set the parent view. It is used to refresh the parent view after saving a customer.
+     * @param parentView
+     */
     public void setParentView(Refreshable parentView) {
         this.parentView = parentView;
     }
 
+    /**
+     * This method is used to set the customer to edit. It is used when editing a customer.
+     * @param customer
+     */
     public void setCustomer(Customer customer) {
         title.setText("Edit Customer");
         this.customer = customer;
@@ -57,6 +70,16 @@ public class CustomerFormController implements Initializable, Viewable {
         return input_id;
     }
 
+    /**
+     * This method is called when the view is initialized. It is used to populate the country and division dropdowns.
+     * @param url
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resourceBundle
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Populate the country dropdown
@@ -68,6 +91,11 @@ public class CustomerFormController implements Initializable, Viewable {
         dropdown_division.setItems(divisions);
     }
 
+    /**
+     * This method is called when the save button is clicked. It is used to save the customer.
+     * It also provides validation that nothing is empty
+     * @param mouseEvent
+     */
     public void on_save(MouseEvent mouseEvent) {
         String name = input_name.getText();
         String address = input_address.getText();
@@ -84,6 +112,7 @@ public class CustomerFormController implements Initializable, Viewable {
             return;
         }
 
+        // Handles if we are creating a new customer or editing an existing one
         if (customer == null) {
             customer = new Customer(name, address, postalCode, phone, division.getId());
         } else {
@@ -96,6 +125,7 @@ public class CustomerFormController implements Initializable, Viewable {
 
         try {
             customer.save();
+            // refreshes the parent view
             parentView.refresh();
             close();
         } catch (Exception e) {
@@ -103,10 +133,18 @@ public class CustomerFormController implements Initializable, Viewable {
         }
     }
 
+    /**
+     * This method is called when the cancel button is clicked. It is used to close the view.
+     * @param mouseEvent
+     */
     public void on_cancel(MouseEvent mouseEvent) {
         close();
     }
 
+    /**
+     * This method is called when a country is selected. It is used to populate the division dropdown.
+     * @param event
+     */
     public void on_country_selected(ActionEvent event) {
         Country selected_country = dropdown_country.getValue();
         ObservableList<Division> divisions = FXCollections.observableList(Division.getAllByCountry(selected_country));

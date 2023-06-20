@@ -66,6 +66,15 @@ public abstract class Popup {
         alert.showAndWait();
     }
 
+    /**
+     * Shows a dialog with a combobox
+     * When the user clicks OK, the onOk action is performed with the selected option
+     * @param options The options to display in the combobox
+     * @param title The title of the dialog
+     * @param message The message of the dialog
+     * @param onOk The action to perform when the user clicks OK
+     * @param <T> The type of the options
+     */
     public static <T> void showComboBoxDialog(List<T> options, String title, String message, Consumer<T> onOk) {
         ChoiceDialog<T> dialog = new ChoiceDialog<>(options.get(0), options);
         dialog.setTitle(title);
