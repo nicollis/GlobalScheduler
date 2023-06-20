@@ -1,0 +1,36 @@
+GlobalScheduler
+===============
+
+The GlobalScheduler is a JavaFX application that allows users to schedule appointments with customers in different
+countries and time zones. The application uses a MySQL database to store customer and appointment information.
+The application also uses a login screen to authenticate users and track login attempts.
+
+Author: Nicholas Ollis
+Email: nollis1@wgu.edu
+Student ID: 011097828
+Application version: 1
+Date: 06/19/2023
+
+IDE: IntelliJ IDEA 2023.1.2 (Ultimate Edition)
+JDK: Oracle OpenJDK Java SE 17.0.7
+JavaFX: JavaFX-SDK-17.0.6
+
+How to run the program
+----------------------
+
+1. Open the project in IntelliJ IDEA.
+2. Press the green play button in the top right corner of the IDE.
+Two configurations exist in the project to run the software
+2a. Maven
+2b. Application
+
+Both run the application the same they just use two different methods from within the IDE.
+
+
+Additional Report
+-----------------
+
+The additional report I chose to create was a report that shows all appointments for a selected customer.
+
+
+MySQL Connector: mysql-connector-java-8.0.25.jar (included in the project root)

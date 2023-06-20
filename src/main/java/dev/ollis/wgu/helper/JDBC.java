@@ -17,8 +17,8 @@ public abstract class JDBC {
     // Connection Information
     private static final String DB_NAME = "client_schedule";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DB_NAME;
-    private static final String DB_USER = "sq|User";
-    private static final String DB_PASS = "PasswOrd!";
+    private static final String DB_USER = "sqlUser";
+    private static final String DB_PASS = "Passw0rd!";
     // Driver version 8.0.25
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
 
